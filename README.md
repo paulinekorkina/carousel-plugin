@@ -1,9 +1,10 @@
-## Подключение
+### Подключение
 ```
 <link rel="stylesheet" href="myplugin.css">
 <script src="myplugin.js"></script>
 ```
-## Требования к разметке 
+
+### Требования к разметке
 Контейнер дожен содержать список ul, слайды (с любым содержимым) вложены в пункты списка li. Например:
 ```
 <div class="container">
@@ -18,8 +19,10 @@
 </div>
 ```
 
-## Использование
-
+### Использование
 ```
 $('.container').myPlugin();
 ```
+
+### Демо
+[https://paulinekorkina.github.io/carousel-plugin/](https://paulinekorkina.github.io/carousel-plugin/)

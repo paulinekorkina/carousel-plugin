@@ -4,6 +4,7 @@ body {
 
 .container,
 .container-new {
+	position: relative;
 	width: 800px;
 	height: 300px;
 	margin: 20px auto 0 auto;
@@ -69,4 +70,46 @@ ul {
 .container-new .control {
 	width: 30px;
 	padding: 5px 0;
+}
+
+.pagination {
+	position: absolute;
+	right: 0;
+	bottom: 80px;
+	left: 0;
+	text-align: center;
+}
+
+.pagination2 {
+	bottom: 5px;
+}
+
+.pagination span {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	border: 1px solid #333333;
+	background: #aaaaaa;
+	cursor: pointer;
+}
+
+.pagination .active {
+	background: #555555;
+}
+
+.pagination1 span {
+	border-radius: 50%;
+}
+
+.pagination2 span {
+	width: 15px;
+	height: 15px;
+	font-size: 10px;
+	line-height: 15px;
+	vertical-align: middle;
+	background: orange;
+}
+
+.pagination2 .active {
+	background: orangered;
 }

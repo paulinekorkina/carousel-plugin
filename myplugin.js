@@ -22,8 +22,13 @@
 
     var runInterval = setTimeout(runAuto, 2600);
 
+    var pagination = this.find('.myplugin-pagination span');
+
+    pagination.eq(0).addClass('active');
+
     function changeLeft() {
     	var newLeft = currentPosition*slideWidth*(-1);
+      pagination.eq(currentPosition).addClass('active');
     	sliderUl.animate(
         {left: newLeft},
         600,
@@ -35,6 +40,7 @@
     nextControl.click(function(){
       clearTimeout(runInterval);
       sliderUl.stop(true, true);
+      pagination.eq(currentPosition).removeClass('active');
     	if (currentPosition < sliderLength - 1) {
     		currentPosition++;
     	} else {
@@ -46,12 +52,22 @@
     prevControl.click(function(){
       clearTimeout(runInterval);
       sliderUl.stop(true, true);
+      pagination.eq(currentPosition).removeClass('active');
     	if (currentPosition > 0) {
     		currentPosition--;
     	} else {
     		currentPosition = sliderLength - 1;
     	}
     	changeLeft();
+    });
+
+    pagination.click(function(){
+      clearTimeout(runInterval);
+      sliderUl.stop(true, true);
+      pagination.eq(currentPosition).removeClass('active');
+      currentPosition = pagination.index(this);
+      console.log(currentPosition);
+      changeLeft();
     });
 
     function runAuto() {

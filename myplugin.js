@@ -33,7 +33,8 @@
       }
 
     nextControl.click(function(){
-    	clearTimeout(runInterval);
+      clearTimeout(runInterval);
+      sliderUl.stop(true, true);
     	if (currentPosition < sliderLength - 1) {
     		currentPosition++;
     	} else {
@@ -43,7 +44,8 @@
     });
 
     prevControl.click(function(){
-    	clearTimeout(runInterval);
+      clearTimeout(runInterval);
+      sliderUl.stop(true, true);
     	if (currentPosition > 0) {
     		currentPosition--;
     	} else {
@@ -53,14 +55,7 @@
     });
 
     function runAuto() {
-    	if (currentPosition < sliderLength - 1) {
-    		currentPosition++;
-    	} else {
-    		currentPosition = 0;
-    	}
-    	var newLeft = currentPosition*slideWidth*(-1);
-    	sliderUl.animate({left: newLeft}, 600);
-    	runInterval = setTimeout(runAuto, 2600);
+      nextControl.trigger('click');
     }
 
   };

@@ -12,30 +12,15 @@
     var currentPosition = 0;
     var sliderWrapper = this.children('.myPluginWrapper');
     sliderWrapper.width(slideWidth).height(slideHeight);
-
     sliderUl.width(slideWidth * sliderLength);
     sliderUl.css({
     	'position': 'absolute',
     	'top': '0',
     	'left': '0'
     });
-
     var runInterval = setTimeout(runAuto, 2600);
-
     var pagination = this.find('.myplugin-pagination span');
-
     pagination.eq(0).addClass('active');
-
-    // function changeLeft() {
-    // 	var newLeft = currentPosition*slideWidth*(-1);
-    //   pagination.eq(currentPosition).addClass('active');
-    // 	sliderUl.animate(
-    //     {left: newLeft},
-    //     600,
-    //     function(){
-    //         runInterval = setTimeout(runAuto, 2600);
-    //     });
-    //   }
 
     nextControl.click(function(){
       clearTimeout(runInterval);
@@ -46,7 +31,6 @@
     	} else {
     		currentPosition = 0;
     	}
-    	// changeLeft();
       sliderUl.animate(
         {left: slideWidth*(-1)},
         600,
@@ -67,15 +51,14 @@
     	} else {
     		currentPosition = sliderLength - 1;
     	}
-    	// changeLeft();
       sliderUl.find('li:last').prependTo(sliderUl);
       sliderUl.css('left', slideWidth*(-1)).animate(
-          {left: 0},
-          600,
-          function(){
-              runInterval = setTimeout(runAuto, 2600);
-          }
-        );
+        {left: 0},
+        600,
+        function(){
+          runInterval = setTimeout(runAuto, 2600);
+        }
+      );
       pagination.eq(currentPosition).addClass('active');
 
     });
@@ -86,27 +69,25 @@
       pagination.eq(currentPosition).removeClass('active');
       currentPosition = pagination.index(this);
       console.log(currentPosition);
-      //changeLeft();
       var prevElCount = sliderLi.eq(currentPosition).prevAll().length;
       sliderUl.animate(
         {left: prevElCount*slideWidth*(-1)},
         600,
         function(){
-          sliderLi.eq(currentPosition).prevAll().appendTo(sliderUl);
-          // var prevEls = sliderLi.eq(currentPosition).prevAll();
-
-          // function compareReversed(a, b) {
-          //   return b - a;
-          // }
-
-          // prevEls.sort(compareReversed);
-
-          // prevEls.appendTo(sliderUl);
-
+          var prevEls = sliderLi.eq(currentPosition).prevAll();
+          var newUl = $('<ul class="myplugin-new-ul"></ul>');
+          sliderUl.parent().append(newUl);
+          prevEls.detach().appendTo(newUl);
+          var newEls = $('.myplugin-new-ul li');
+          newEls.sort(function(a, b){
+            var an = $(a).index();
+            var bn = $(b).index();
+            return bn - an;
+          });
+          newEls.detach().appendTo(sliderUl);
           sliderUl.css('left', '0');
         }
-        );
-
+      );
       runInterval = setTimeout(runAuto, 2600);
       pagination.eq(currentPosition).addClass('active');
     });

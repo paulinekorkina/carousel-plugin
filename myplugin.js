@@ -68,7 +68,6 @@
       sliderUl.stop(true, true);
       pagination.eq(currentPosition).removeClass('active');
       currentPosition = pagination.index(this);
-      console.log(currentPosition);
       var prevElCount = sliderLi.eq(currentPosition).prevAll().length;
       sliderUl.animate(
         {left: prevElCount*slideWidth*(-1)},
@@ -96,5 +95,30 @@
       nextControl.trigger('click');
     }
 
+    // Обработка событий тачскрина
+
+    var touchPosition; // Координата нажатия
+
+    sliderLi.on('touchstart', function(event){
+      touchPosition = event.touches[0].pageX;
+    });
+    sliderLi.on('touchmove', function(event){
+      // При движении нажатия отслеживать направление движения
+      var tmpMove = touchPosition - event.touches[0].pageX;
+      // Сдвиг достаточный?
+      if (Math.abs(tmpMove) < 10) {
+        return false;
+      }
+      if (tmpMove < 0) {
+        // Листаем вправо
+        prevControl.trigger('click');
+        console.log('right');
+      }
+      else {
+        // Листаем влево
+        nextControl.trigger('click');
+        console.log('left');
+      }
+    });
   };
 })(jQuery);

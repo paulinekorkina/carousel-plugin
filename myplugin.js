@@ -1,5 +1,9 @@
 (function( $ ) {
-  $.fn.myPlugin = function() {
+  $.fn.myPlugin = function(options) {
+
+    var settings = $.extend( {
+      'autoScroll' : true
+    }, options);
 
     return this.each(function() {
 
@@ -22,12 +26,12 @@
       	'top': '0',
       	'left': '0'
       });
-      var runInterval = setTimeout(runAuto, 2600);
+      startAuto();
       var pagination = $this.find('.myplugin-pagination span');
       pagination.eq(0).addClass('active');
 
       nextControl.click(function(){
-        clearTimeout(runInterval);
+        stopAuto();
         sliderUl.stop(true, true);
         pagination.eq(currentPosition).removeClass('active');
       	if (currentPosition < sliderLength - 1) {
@@ -41,13 +45,13 @@
           function(){
             sliderUl.css('left', '0');
             sliderUl.find('li:first').appendTo(sliderUl);
-            runInterval = setTimeout(runAuto, 2600);
+            startAuto();
           });
         pagination.eq(currentPosition).addClass('active');
       });
 
       prevControl.click(function(){
-         clearTimeout(runInterval);
+         stopAuto();
          sliderUl.stop(true, true);
         pagination.eq(currentPosition).removeClass('active');
       	if (currentPosition > 0) {
@@ -59,19 +63,17 @@
         sliderUl.css('left', slideWidth*(-1)).animate(
           {left: 0},
           600,
-          function(){
-            runInterval = setTimeout(runAuto, 2600);
-          }
+          startAuto
         );
         pagination.eq(currentPosition).addClass('active');
 
       });
 
       pagination.click(function(){
-        clearTimeout(runInterval);
+        stopAuto();
         sliderUl.stop(true, true);
         pagination.eq(currentPosition).removeClass('active');
-        currentPosition = pagination.index($this);
+        currentPosition = pagination.index(this);
         var prevElCount = sliderLi.eq(currentPosition).prevAll().length;
         sliderUl.animate(
           {left: prevElCount*slideWidth*(-1)},
@@ -91,12 +93,24 @@
             sliderUl.css('left', '0');
           }
         );
-        runInterval = setTimeout(runAuto, 2600);
+        startAuto();
         pagination.eq(currentPosition).addClass('active');
       });
 
       function runAuto() {
         nextControl.trigger('click');
+      }
+
+      function stopAuto() {
+        if (settings.autoScroll) {
+          clearTimeout(runInterval);
+        }
+      }
+
+      function startAuto() {
+        if (settings.autoScroll) {
+          runInterval = setTimeout(runAuto, 2600);
+        }
       }
 
       // Обработка событий тачскрина

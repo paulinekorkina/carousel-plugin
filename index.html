@@ -62,8 +62,10 @@
 	<script>
 
 		$(document).ready(function(){
-			$('.container').myPlugin();
-			$('.container-new').myPlugin();
+			$('.container').myPlugin().css('background-color', ' #d8e4ec');
+			$('.container-new').myPlugin({
+				'autoScroll' : false
+			});
 		});
 
 	</script>

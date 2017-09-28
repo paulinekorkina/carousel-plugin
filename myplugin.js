@@ -2,6 +2,7 @@
   $.fn.myPlugin = function(options) {
 
     var settings = $.extend( {
+      'slideCount' : 1,
       'autoScroll' : true
     }, options);
 
@@ -19,7 +20,7 @@
       var sliderLength = sliderLi.length;
       var currentPosition = 0;
       var sliderWrapper = $this.children('.myPluginWrapper');
-      sliderWrapper.width(slideWidth).height(slideHeight);
+      sliderWrapper.width(slideWidth * settings.slideCount).height(slideHeight);
       sliderUl.width(slideWidth * sliderLength);
       sliderUl.css({
       	'position': 'absolute',
@@ -75,6 +76,17 @@
         pagination.eq(currentPosition).removeClass('active');
         currentPosition = pagination.index(this);
         var prevElCount = sliderLi.eq(currentPosition).prevAll().length;
+        // var prevEls = sliderLi.eq(currentPosition).prevAll();
+        // var newUl = $('<ul class="myplugin-new-ul"></ul>');
+        // sliderUl.parent().append(newUl);
+        // prevEls.clone().appendTo(newUl);
+        // var newEls = $('.myplugin-new-ul li');
+        // newEls.sort(function(a, b){
+        //   var an = $(a).index();
+        //   var bn = $(b).index();
+        //   return bn - an;
+        // });
+        // newEls.detach().appendTo(sliderUl);
         sliderUl.animate(
           {left: prevElCount*slideWidth*(-1)},
           600,
@@ -90,7 +102,9 @@
               return bn - an;
             });
             newEls.detach().appendTo(sliderUl);
+            //prevEls.remove();
             sliderUl.css('left', '0');
+            newUl.remove();
           }
         );
         startAuto();

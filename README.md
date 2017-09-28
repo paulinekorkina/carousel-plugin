@@ -47,5 +47,15 @@ $('.container-new').myPlugin({
 });
 ```
 
+### Количество слайдов
+
+По умолчанию одновременно показывается один слайд. Чтобы изменить это количество, используйте опцию slideCount:
+
+```
+$('.container-new').myPlugin({
+  'slideCount' : 3
+});
+```
+
 ## Демо
 [https://paulinekorkina.github.io/carousel-plugin/](https://paulinekorkina.github.io/carousel-plugin/)
